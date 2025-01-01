@@ -43,21 +43,29 @@ def cetak():
     df_hasil = pd.DataFrame([[]])
 
     for file in file_paths:
+      try:
         hasil = read_data(file)
         df_hasil = pd.concat([df_hasil, hasil], ignore_index=True)
-    print(df_hasil)
-    
+        
+        hapus_nilai = ["BIAYA ADM   ", "PAJAK BUNGA   ", 'BUNGA   ', "CR KOREKSI BUNGA"]
+        df_hasil = df_hasil[~df_hasil[df_hasil.columns[1]].isin(hapus_nilai)]
+        df_hasil = df_hasil.dropna(how="all")
+        df_hasil.reset_index(drop=True, inplace=True)
+      except:
+        notif.error(file)
+        continue
+  
     try:
       save_filename = filedialog.asksaveasfilename(defaultextension=".xlsx",
                                               initialdir="C:/",
                                               title="Save",
                                               filetypes=(('Microsoft Excel', "*.xlsx"), ("csv", "*.csv")))
-
       if save_filename:
         df_hasil.to_excel(save_filename, index=False)
         notif.success_save()
+
     except:
-       notif.fail_save()
+      notif.fail_save()
 
 def open_files():
     global file_paths
