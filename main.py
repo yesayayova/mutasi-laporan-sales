@@ -72,7 +72,7 @@ def open_files():
     # Membuka dialog file untuk memilih beberapa file
     file_paths = filedialog.askopenfilenames(
         title="Pilih File Excel",
-        filetypes=[("Excel Files", "*.xls*"),("CSV Files", "*.csv")]
+        filetypes=[("CSV Files", "*.csv"),("Excel Files", "*.xls*")]
     )
     filename = []
 
@@ -87,7 +87,7 @@ def open_files():
 
 # Membuat jendela utama Tkinter
 root = tk.Tk()
-root.title("Mutasi Laporan Sales v.1.1")
+root.title("Mutasi Laporan Sales v.2.2")
 
 width = 600
 height = 340
